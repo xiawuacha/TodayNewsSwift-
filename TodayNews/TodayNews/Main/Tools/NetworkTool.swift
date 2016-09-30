@@ -22,11 +22,9 @@ class NetworkTool: NSObject {
     //有参数的 GET 请求
     func loadGETRequestDataInfo(url:String!,params:[String:AnyObject], finished:(dataDict:[String: JSON]) -> ()) {
         SVProgressHUD.showWithStatus("正在加载...")
-        
-        let URL = BASE_URL + url
-        
+
         Alamofire
-            .request(.GET, URL, parameters: params)
+            .request(.GET, url, parameters: params)
             .responseJSON { (response) in
                 guard response.result.isSuccess else {
                     SVProgressHUD.showErrorWithStatus("加载失败...")
@@ -34,11 +32,7 @@ class NetworkTool: NSObject {
                 }
                 if let value = response.result.value {
                     let dict = JSON(value)
-                    let message = dict["message"].stringValue
-                    guard message != "success" else {
-                        SVProgressHUD.showInfoWithStatus(message)
-                        return
-                    }
+                
                     SVProgressHUD.dismiss()
                     let data = dict["data"].dictionary
                     finished(dataDict: data!)

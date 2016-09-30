@@ -13,9 +13,9 @@ class ScrollTitleView: UIView {
 
     /// 存放标题模型的数组
     var titles = [HomeTopTitle]()
-    /// 存放标题 label 数组
+    /// 标题 label
     var labels = [WKTitleLabel]()
-    /// 存放 label 的宽度
+    ///  label 的宽度
     private var labelWidths = [CGFloat]()
     /// 顶部导航栏右边加号按钮点击
     var addBtnClickClosure: (() -> ())?
@@ -138,8 +138,8 @@ extension ScrollTitleView {
             scrollView.addSubview(label)
         }
         let currentLabel = labels[currentIndex]
-        currentLabel.textColor = UIColor.whiteColor()
-        currentLabel.currentScale = 1.1
+        currentLabel.textColor = UIColor.orangeColor()
+        currentLabel.currentScale = 1.2
     }
     
     /// 设置 label 的位置
@@ -174,8 +174,8 @@ extension ScrollTitleView {
         let oldLabel = labels[oldIndex]
         oldLabel.textColor = KColor(235, g: 235, b: 235, a: 1.0)
         oldLabel.currentScale = 1.0
-        currentLabel.textColor = UIColor.whiteColor()
-        currentLabel.currentScale = 1.1
+        currentLabel.textColor = UIColor.orangeColor()
+        currentLabel.currentScale = 1.2
         // 改变 label 的位置
         adjustTitleOffSetToCurrentIndex(currentIndex, oldIndex: oldIndex)
         didSelectTitleLable?(titleLabel: currentLabel)
@@ -189,8 +189,8 @@ extension ScrollTitleView {
         // 重新设置 label 的状态
         let oldLabel = labels[oldIndex]
         let currentLabel = labels[currentIndex]
-        currentLabel.currentScale = 1.1
-        currentLabel.textColor = UIColor.whiteColor()
+        currentLabel.currentScale = 1.2
+        currentLabel.textColor = UIColor.orangeColor()
         oldLabel.textColor = KColor(235, g: 235, b: 235, a: 1.0)
         oldLabel.currentScale = 1.0
         // 当前偏移量
@@ -224,9 +224,24 @@ class WKTitleLabel: UILabel {
     /// 用来记录当前 label 的缩放比例
     var currentScale: CGFloat = 1.0 {
         didSet {
+//            if currentScale == 1.0 {
+//                 self.textColor = UIColor.init(red: 106/255.0, green: 208/255.0 , blue: 0.0, alpha: 1)
+//            }else{
+//                 self.textColor = UIColor.init(red: 150/255.0, green:150/255.0 , blue: 150/255.0 , alpha: 1)
+//            }
+//            let minScale:CGFloat = 0.7
+//            let trueScale:CGFloat = minScale + (1-minScale)*currentScale
             transform = CGAffineTransformMakeScale(currentScale, currentScale)
         }
     }
-
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.currentScale = 0.0
+        self.textAlignment = NSTextAlignment.Center
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
 }
